@@ -15,6 +15,7 @@ With logging feature
 - PostgreSQL
 - Docker + Docker compose
 - Nginx
+- Bootstrap
 
 ## List of tables
 ![tables](/misc/images/tables.jpeg)
