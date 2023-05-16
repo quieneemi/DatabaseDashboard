@@ -1,0 +1,45 @@
+@model Table
+
+@{
+    ViewBag.Title = "Routines";
+}
+
+<div class="container-sm">
+    <ul class="nav nav-pills nav-fill mb-3">
+        <li class="nav-item">
+            <a class="nav-link" asp-action="Console">Console</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link active" asp-action="Routines">Routines</a>
+        </li>
+    </ul>
+    <div class="table-responsive">
+        <table class="table table-sm table-striped table-hover">
+            <thead class="thead-light">
+            <tr>
+                @foreach (var column in Model.Columns)
+                {
+                    <th scope="col" style="padding: .5rem;">@column</th>
+                }
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var row in Model.Rows)
+            {
+                <tr>
+                    @{
+                        var routineName = row[0];
+                        var routineDescription = row[1];
+                    }
+                    <td style="padding: .5rem">
+                        <a asp-controller="Operations" asp-action="ExecuteRoutine"
+                           asp-route-routineName="@routineName" asp-route-description="@routineDescription"
+                           class="btn btn-link link-underline link-underline-opacity-0">@routineName</a>
+                    </td>
+                    <td style="padding: .5rem">@routineDescription</td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+</div>

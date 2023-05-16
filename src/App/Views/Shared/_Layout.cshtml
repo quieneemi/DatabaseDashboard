@@ -1,0 +1,37 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>@ViewBag.Title - Info21v3</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="~/Info21v3.styles.css" asp-append-version="true"/>
+</head>
+<body>
+<header>
+    <nav class="navbar navbar-expand navbar-light bg-white border-bottom box-shadow mb-3">
+        <div class="container-fluid">
+            <a class="navbar-brand" asp-area="" asp-controller="Data" asp-action="Tables" asp-route-tableName="">Info21</a>
+            <ul class="navbar-nav flex-grow-1">
+                <li class="nav-item">
+                    <a class="nav-link text-dark" asp-area=""
+                       asp-controller="Data" asp-action="Tables" asp-route-tableName="">Data</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" asp-area=""
+                       asp-controller="Operations" asp-action="Console">Operations</a>
+                </li>
+            </ul>
+            <p class="ms-auto text-muted navbar-nav">&copy; 2023, cgreenbe & dhammer</p>
+        </div>
+    </nav>
+</header>
+
+<main role="main" class="pb-3" style="margin-left: 3%; margin-right: 3%">
+    @RenderBody()
+</main>
+
+<script src="~/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+@await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

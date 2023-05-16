@@ -1,0 +1,32 @@
+@model Record
+
+@{
+    ViewBag.Title = "Confirm";
+    string action = ViewBag.Action;
+}
+
+<div class="container-sm">
+    <h3>Are you sure you want to @action this?</h3>
+    <hr/>
+    @using (Html.BeginForm(action, "Data", FormMethod.Post))
+    {
+        @Html.HiddenFor(m => m.TableName)
+        <dl class="row">
+            @for (var i = 0; i < Model.Keys.Length; i++)
+            {
+                @Html.HiddenFor(m => m.Keys[i])
+                @Html.HiddenFor(m => m.Values[i])
+                
+                <dt class="col-sm-2">
+                    @Html.DisplayFor(m => m.Keys[i])
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(m => m.Values[i])
+                </dd>
+            }
+        </dl>
+
+        <button class="btn btn-warning me-2" onclick="history.back(); return false;">Go back</button>
+        <input type="submit" class="btn btn-danger" value="Yes, @action"/>
+    }
+</div>

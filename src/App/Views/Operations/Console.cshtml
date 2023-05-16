@@ -1,0 +1,21 @@
+@model ConsoleViewModel
+
+@{
+    ViewBag.Title = "Console";
+}
+
+<div class="container-sm">
+    <ul class="nav nav-pills nav-fill mb-3">
+        <li class="nav-item">
+            <a class="nav-link active" asp-action="Console">Console</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" asp-action="Routines">Routines</a>
+        </li>
+    </ul>
+    @using (Html.BeginForm("Console", "Operations", FormMethod.Post))
+    {
+        @Html.TextAreaFor(m => m.Query, new { @class = "form-control fw-semibold", placeholder = "Type here..", rows = 20 })
+        <input type="submit" class="btn btn-success mt-2" value="Execute"/>
+    }
+</div>

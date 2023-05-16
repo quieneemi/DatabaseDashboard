@@ -1,0 +1,22 @@
+@model IReadOnlyCollection<string>
+
+@{
+    ViewBag.Title = "Tables";
+}
+
+<div class="container">
+    @if (Model.Count > 0)
+    {
+        <div class="list-group">
+            @foreach (var table in Model)
+            {
+                <a asp-action="Tables" asp-route-tableName="@table"
+                   class="list-group-item list-group-item-action">@table</a>
+            }
+        </div>
+    }
+    else
+    {
+        <h2>No data</h2>
+    }
+</div>

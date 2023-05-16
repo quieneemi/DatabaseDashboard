@@ -1,0 +1,93 @@
+@model Table
+
+@{
+    Layout = "_Layout";
+    ViewBag.Title = Model.TableName;
+}
+
+<div class="hstack mb-2">
+    <button class="btn btn-warning me-3" onclick="history.back(); return false;">Go back</button>
+    @if (Model.Editable)
+    {
+        <form asp-action="Import" asp-controller="Operations" method="post" asp-route-tableName="@Model.TableName"
+              enctype="multipart/form-data">
+            <div class="input-group">
+                <input type="file" name="file" class="form-control">
+                <input type="submit" class="btn btn-secondary me-1" value="Import"/>
+            </div>
+        </form>
+    }
+    @using (Html.BeginForm("Export", "Operations", FormMethod.Post))
+    {
+        @Html.HiddenFor(m => m.TableName)
+        for (var i = 0; i < Model.Columns.Length; i++)
+        {
+            @Html.HiddenFor(m => m.Columns[i])
+        }
+        for (var i = 0; i < Model.Rows.Length; i++)
+        {
+            for (var j = 0; j < Model.Rows[i].Length; j++)
+            {
+                @Html.HiddenFor(m => m.Rows[i][j])
+            }
+        }
+        <input type="submit" class="btn btn-secondary me-1" value="Export"/>
+    }
+    @if (Model.Editable)
+    {
+        <a asp-controller="Data" asp-action="Create" asp-route-tableName="@Model.TableName"
+           class="btn btn-primary me-3">Create</a>
+        <h1 class="ms-auto">@Model.TableName</h1>
+    }
+</div>
+
+<div class="table-responsive">
+    <table class="table table-sm table-striped table-bordered table-hover align-middle">
+        <thead class="thead-light table-secondary">
+        <tr>
+            @if (Model.Editable)
+            {
+                <th scope="col" style="width: 1px; white-space: nowrap;"></th>
+            }
+            @foreach (var column in Model.Columns)
+            {
+                <th scope="col" style="padding: .5rem;">@column</th>
+            }
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var row in Model.Rows)
+        {
+            <tr>
+                @if (Model.Editable)
+                {
+                    <td>
+                        <div class="d-flex">
+                            <a asp-controller="Data" asp-action="Update"
+                               asp-route-tableName="@Model.TableName"
+                               asp-route-keyValue="@row[Model.PrimaryKeyColumnId]"
+                               class="btn btn-link">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
+                                    <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
+                                </svg>
+                            </a>
+                            <a asp-controller="Data" asp-action="Delete"
+                               asp-route-tableName="@Model.TableName"
+                               asp-route-keyValue="@row[Model.PrimaryKeyColumnId]"
+                               class="btn btn-link">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+                                    <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
+                                </svg>
+                            </a>
+                        </div>
+                    </td>
+                }
+                @foreach (var cell in row)
+                {
+                    <td style="padding: .5rem">@cell</td>
+                }
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>
